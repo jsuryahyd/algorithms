@@ -22,49 +22,54 @@ s: a string .
 function sherlockAndAnagrams(s) {
 	console.time("timeTaken")
 	//get all substr
-	var substrs = [];
-	var charMaps = []
+	
+	var charMap = {}
+	var pointer = 0; 
+	var pairs = 0;
 	while(s.length){
 			for(var i=1;i<= s.length;i++){
-			var sub = s.substr(0,i)
-			// substrs.push(sub)
-			const b = {}
-			for(var j of sub){
-					b[j] = b[j] ? b[j]+1:1
+			var sub = s.substr(0,i);
+			var sortedSub = sub.split("").sort().join();
+			if(charMap[sortedSub]){
+				pairs+=charMap[sortedSub]
+				charMap[sortedSub]++;
+			}else{
+				charMap[sortedSub] = 1
 			}
-			charMaps.push(b)
 			}
-			s = s.substr(1)
-	}
-	// console.log(util.inspect(substrs,null,2),util.inspect(charMaps,null,2));
-	console.log(charMaps.length+" charMaps")
-	//make a dict with substri
-	var anagram_pair_idxs = [];
-	var pointer = 0; 
-	
-	while(pointer < charMaps.length){
-			var c = charMaps[pointer];
-			charMaps.forEach((b,idx)=>{
-				if(pointer == idx) return
-				if(anagram_pair_idxs.indexOf([pointer,idx].join(",")) != -1 || anagram_pair_idxs.indexOf([idx,pointer].join(",")) != -1 ) return
-					if(Object.keys(b).length != Object.keys(c).length) return
-					for(var k in c){
-							if(c[k]!=b[k]){
-									return
-							}
-					}
-					// console.log(pointer,idx,util.inspect(c,null,2),util.inspect(b,null,2))
-					anagram_pair_idxs.push([pointer,idx].join(","));
-				})
-				
-				pointer++;
+			s = s.substr(1);
 	}
 	console.timeEnd("timeTaken");
-	return anagram_pair_idxs.length;
+	return pairs;
+	// //make a dict with substri
+	// console.log("charMaps : ",charMaps.length)
+	// while(pointer < charMaps.length){
+	// 		var c = charMaps[pointer];
+	// 		charMaps.forEach((b,idx)=>{
+	// 			if(pointer == idx) return
+	// 			if(anagram_pair_idxs.indexOf([pointer,idx].join(",")) != -1 || anagram_pair_idxs.indexOf([idx,pointer].join(",")) != -1 ) return
+	// 				if(Object.keys(b).length != Object.keys(c).length) return
+	// 				for(var k in c){
+	// 						if(c[k]!=b[k]){
+	// 								return
+	// 						}
+	// 				}
+	// 				anagram_pair_idxs.push([pointer,idx].join(","));
+	// 			})
+				
+	// 			pointer++;
+	// }
+	// console.timeEnd("timeTaken");
+	// return anagram_pair_idxs.length;
 	}
 	tests.map(t=>{
 		// console.log(minimumAbsoluteDifference(t))
 		expect(sherlockAndAnagrams(...t.input)).toBe(t.expected);
 		
 		})
-		console.log("tests completed")
+		console.log("tests completed");
+
+
+
+
+

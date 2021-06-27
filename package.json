@@ -4,7 +4,9 @@
   "description": "",
   "main": "algos.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gen":"hygen algoGen with-prompt",
+    "test" : "node "
+
   },
   "keywords": [],
   "author": "",
